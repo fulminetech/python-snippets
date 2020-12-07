@@ -20,7 +20,11 @@ SERVER_PORT = 502
 PRE_ADDR = 6097
 STATUS_ADDR = 2589
 
+
 c = ModbusClient()
+global MBSCAN
+# Scan time in seconds
+MBSCAN = 0.001
 
 # uncomment this line to see debug message
 #c.debug(True)
@@ -39,24 +43,23 @@ if not c.is_open():
         if c.is_open():
 
             # Write multiple registers
-            bits1 = c.write_multiple_registers(PRE_ADDR, [44,55])
+            bits1 = c.write_multiple_registers(PRE_ADDR, [50,35])
             if bits1:
-                print("Registers write success!")
+                print(+int(time.time_ns() // 1000000 - ms), "Registers write success!")
             else:
                 print("Registers write failed!")
 
             # sleep 2s before next polling
-            time.sleep(2)
+            time.sleep(MBSCAN)
 
             # Write multiple coils
-            bits1 = c.write_multiple_coils(STATUS_ADDR, [True, True])
+            bits1 = c.write_multiple_coils(STATUS_ADDR, [False, False])
             # if success display registers
             if bits1:
-                print("Coil write success!")
+                print(+int(time.time_ns() // 1000000 - ms), "Coil write success!")
             else:
                 print("Coil write failed!")
     
             # sleep 2s before next polling
-            time.sleep(2)
+            time.sleep(MBSCAN)
 
-            
