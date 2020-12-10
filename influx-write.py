@@ -3,6 +3,13 @@
 
 from influxdb import InfluxDBClient
 
+# InfluxDB configs
+INFLUX_HOST = "localhost"
+INFLUX_PORT = 8086
+INFLUX_USER = "root"
+INFLUX_PASS = "root"
+INFLUX_BASE = "root"
+
 # Payload
 json_body = [
     {
@@ -13,13 +20,14 @@ json_body = [
         },
         "time": "2009-11-10T23:00:00Z",
         "fields": {
-            "value": 0.64
+            "value": 0.65
         }
     }
 ]
 
 # Connect to client
-client = InfluxDBClient('localhost', 8086, 'root', 'root', 'example')
+# client = InfluxDBClient(host, port, user, password, dbname)
+client = InfluxDBClient(INFLUX_HOST, INFLUX_PORT, INFLUX_USER, INFLUX_PASS, INFLUX_BASE)
 
 # Create Database
 client.create_database('example')
