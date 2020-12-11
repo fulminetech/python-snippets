@@ -2,6 +2,7 @@
 
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -25,18 +26,15 @@ payload = {
     'stats': []
 }
 
-VART = 10
-
 class Payload(Resource):
     def get(self):
         print('Received!')
-        return VART
+        print(json.dumps(payload,indent=3))
+        return payload
 
 class Set(Resource):
     def get(self, parameter, value):
-        global VART
         if parameter == "pressure":
-            VART = 100
             return parameter+" set to "+value
         elif parameter == "machine":
             return value
